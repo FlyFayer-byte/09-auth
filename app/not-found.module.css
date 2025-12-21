@@ -1,0 +1,23 @@
+.title {
+    text-align: center;
+    font-size: 2rem;
+    color: red;
+}
+
+.description {
+    display: flex;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: gray;
+}
+
+.btn_back_home {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #0070f3;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;
+}
