@@ -14,7 +14,6 @@ const Pagination: FC<PaginationProps> = ({
   totalPages,
   onPageChange,
 }) => {
-  // ReactPaginate повертає номер сторінки в форматі 0-based
   const handlePageClick = (selected: { selected: number }) => {
     onPageChange(selected.selected + 1);
   };

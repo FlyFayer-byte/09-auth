@@ -2,21 +2,11 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import './globals.css';
 import '@/app/notes/filter/[...slug]/NotesPage.module.css';
 import { Metadata } from 'next';
-// import { Geist, Geist_Mono } from 'next/font/google';
 
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import TanStackProvider from '@/components/TanStackProvider/TanStackProvider';
 
-// const geistSans = Geist({
-//   variable: '--font-geist-sans',
-//   subsets: ['latin'],
-// });
-
-// const geistMono = Geist_Mono({
-//   variable: '--font-geist-mono',
-//   subsets: ['latin'],
-// });
 import { Roboto } from 'next/font/google';
 
 const roboto = Roboto({
@@ -53,7 +43,6 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children, modal }: RootLayoutProps) {
   return (
-    // console.log(`1. app/layout.tsx - function RootLayout return <html> => <body>`),
     <html lang="en">
       <body className={`${roboto.variable}`}>
         <TanStackProvider>

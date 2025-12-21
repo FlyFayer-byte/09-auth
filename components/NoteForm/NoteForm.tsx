@@ -1,31 +1,14 @@
 'use client'
-// import { Formik, Form, Field, ErrorMessage } from 'formik';
-// import * as Yup from 'yup';
+
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-
 import { createNote } from '../../lib/api';
-// import type { CreateNoteParams } from '../../lib/api';
-// import type { AddNote, NoteTag } from '../../types/note';
-
 import css from './NoteForm.module.css';
-// import { Router } from 'next/router';
 import { useRouter } from 'next/navigation';
 
 interface NoteFormProps {
   onSuccess?: () => void;
 }
 
-// Схема валідації
-// const validationSchema = Yup.object({
-//   title: Yup.string()
-//     .min(3, 'Minimum 3 characters')
-//     .max(50, 'Maximum 50 characters')
-//     .required('Title is required'),
-//   content: Yup.string().max(500, 'Maximum 500 characters'),
-//   tag: Yup.string()
-//     .oneOf(['Todo', 'Work', 'Personal', 'Meeting', 'Shopping'])
-//     .required(),
-// });
 import { useNoteDraft } from '@/lib/store/noteStore';
 import toast from 'react-hot-toast';
 import type { AddNote } from '@/types/note';
@@ -80,7 +63,6 @@ export default function NoteForm({onSuccess}:NoteFormProps) {
           onChange={handleChange}
           defaultValue={draft?.title}
         />
-        {/* <ErrorMessage name="title" component="p" className={css.error} /> */}
       </div>
 
       <div className={css.formGroup}>
@@ -93,7 +75,6 @@ export default function NoteForm({onSuccess}:NoteFormProps) {
           onChange={handleChange}
           defaultValue={draft?.content}
         ></textarea>
-        {/* <ErrorMessage name="content" component="p" className={css.error} /> */}
       </div>
 
       <div className={css.formGroup}>
@@ -111,7 +92,6 @@ export default function NoteForm({onSuccess}:NoteFormProps) {
           <option value="Meeting">Meeting</option>
           <option value="Shopping">Shopping</option>
         </select>
-        {/* <ErrorMessage name="tag" component="p" className={css.error} /> */}
       </div>
 
       <div className={css.actions}>
@@ -119,7 +99,6 @@ export default function NoteForm({onSuccess}:NoteFormProps) {
           type="button"
           className={css.cancelButton}
           onClick={() => router.back()}
-          // disabled={isSubmitting}
         >
           Cancel
         </button>
@@ -129,7 +108,6 @@ export default function NoteForm({onSuccess}:NoteFormProps) {
           className={css.submitButton}
           disabled={isPending}
         >
-          {/* {isSubmitting ? 'Creating...' : 'Create'} */}
           Create note
         </button>
       </div>

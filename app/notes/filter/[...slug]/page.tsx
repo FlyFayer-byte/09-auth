@@ -3,7 +3,6 @@ import { fetchNotes } from '@/lib/api';
 import NotesClient from './Notes.client';
 import type { Metadata } from 'next';
 
-// import type { MetadataProps } from '@/types/note';
 type PageProps = {
   params: Promise<{ slug: string[] | undefined}>;
 }

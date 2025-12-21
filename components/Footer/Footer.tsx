@@ -3,7 +3,6 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    // console.log(`3. components/Footer/Footer.tsx - function 'Footer' return <footer> => <body>`),
     (
       <footer className={css.footer}>
         <div className={css.content}>
