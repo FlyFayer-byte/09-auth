@@ -8,7 +8,8 @@ import NoteList from '@/components/NoteList/NoteList';
 import SearchBox from '@/components/SearchBox/SearchBox';
 import Pagination from '@/components/Pagination/Pagination';
 
-import { fetchNotes } from '@/lib/api';
+import { fetchNotes } from '@/lib/api/clientApi';
+// import { fetchNotes } from '@/lib/api';
 import css from './NotesPage.module.css';
 import Link from 'next/link';
 
@@ -17,7 +18,6 @@ interface Props {
 }
 
 export default function NotesClient({ tag }: Props) {
-
   const normalizedTag = tag ?? 'all';
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -52,7 +52,7 @@ export default function NotesClient({ tag }: Props) {
               setPage(1);
             }}
           />
-          <Link className={css.button} href='/notes/action/create'>
+          <Link className={css.button} href="/notes/action/create">
             Create note +
           </Link>
         </header>

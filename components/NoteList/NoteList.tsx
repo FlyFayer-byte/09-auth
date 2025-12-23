@@ -4,7 +4,7 @@ import { useState } from 'react';
 import toast from 'react-hot-toast';
 
 import type { Note } from '../../types/note';
-import { deleteNote } from '../../lib/api';
+import { deleteNote } from '@/lib/api/clientApi';
 
 import css from './NoteList.module.css';
 
@@ -46,11 +46,7 @@ export default function NoteList({ notes }: NoteListProps) {
           <div className={css.footer}>
             <span className={css.tag}>{note.tag}</span>
 
-            <Link
-              href={`/notes/${note.id}`}
-              scroll={false}
-              className={css.link}
-            >
+            <Link href={`/notes/${note.id}`} scroll={false} className={css.link}>
               View details
             </Link>
 

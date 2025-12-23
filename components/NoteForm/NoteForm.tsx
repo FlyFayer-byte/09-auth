@@ -1,7 +1,7 @@
-'use client'
+'use client';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { createNote } from '../../lib/api';
+import { createNote } from '@/lib/api/clientApi';
 import css from './NoteForm.module.css';
 import { useRouter } from 'next/navigation';
 
@@ -13,7 +13,7 @@ import { useNoteDraft } from '@/lib/store/noteStore';
 import toast from 'react-hot-toast';
 import type { AddNote } from '@/types/note';
 
-export default function NoteForm({onSuccess}:NoteFormProps) {
+export default function NoteForm({ onSuccess }: NoteFormProps) {
   const queryClient = useQueryClient();
 
   const router = useRouter();
@@ -51,7 +51,13 @@ export default function NoteForm({onSuccess}:NoteFormProps) {
     mutate(values);
   };
   return (
-    <form className={css.form} onSubmit={e => { e.preventDefault(); handleSubmit(new FormData(e.currentTarget))}}>
+    <form
+      className={css.form}
+      onSubmit={e => {
+        e.preventDefault();
+        handleSubmit(new FormData(e.currentTarget));
+      }}
+    >
       <div className={css.formGroup}>
         <label htmlFor="title">Title</label>
         <input
@@ -95,19 +101,11 @@ export default function NoteForm({onSuccess}:NoteFormProps) {
       </div>
 
       <div className={css.actions}>
-        <button
-          type="button"
-          className={css.cancelButton}
-          onClick={() => router.back()}
-        >
+        <button type="button" className={css.cancelButton} onClick={() => router.back()}>
           Cancel
         </button>
 
-        <button
-          type="submit"
-          className={css.submitButton}
-          disabled={isPending}
-        >
+        <button type="submit" className={css.submitButton} disabled={isPending}>
           Create note
         </button>
       </div>

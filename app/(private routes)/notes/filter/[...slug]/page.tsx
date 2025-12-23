@@ -1,13 +1,14 @@
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
-import { fetchNotes } from '@/lib/api';
+import { fetchNotes } from '@/lib/api/clientApi';
+// import { fetchNotes } from '@/lib/api';
 import NotesClient from './Notes.client';
 import type { Metadata } from 'next';
 
 type PageProps = {
-  params: Promise<{ slug: string[] | undefined}>;
-}
+  params: Promise<{ slug: string[] | undefined }>;
+};
 
-export async function generateMetadata({ params }:PageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const resolvedParams = await params;
   const tag = resolvedParams.slug?.[0] ?? 'all';
 
@@ -31,7 +32,6 @@ export async function generateMetadata({ params }:PageProps): Promise<Metadata> 
     },
   };
 }
-
 
 type Props = {
   params: Promise<{ slug?: string[] }>;

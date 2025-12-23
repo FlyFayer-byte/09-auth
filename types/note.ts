@@ -9,15 +9,9 @@ export interface Note {
 }
 
 // Доступні типи тегів нотаток (строго фіксований набір значень)
-export type NoteTag =
-  | "Todo"
-  | "Work"
-  | "Personal"
-  | "Meeting"
-  | "Shopping";
+export type NoteTag = "Todo" | "Work" | "Personal" | "Meeting" | "Shopping";
 
-export type AddNote = Omit<Note, 'id'| 'createdAt' | 'updatedAt'>;
-
+export type AddNote = Omit<Note, 'id' | 'createdAt' | 'updatedAt'>;
 
 export type MetadataProps = {
   params: {

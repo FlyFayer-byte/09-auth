@@ -1,10 +1,10 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { fetchNoteById } from '@/lib/api';
+import { fetchNoteById } from '@/lib/api/clientApi';
 import Modal from '@/components/Modal/Modal';
 import { useRouter } from 'next/navigation';
-import NoteDetailsClient from '../../../notes/[id]/NoteDetails.client'
+import NoteDetailsClient from '../../../(private routes)/notes/[id]/NoteDetails.client';
 
 export default function NotePreviewClient({ id }: { id: string }) {
   const router = useRouter();

@@ -1,7 +1,7 @@
 'use client';
 
-import {useQuery} from '@tanstack/react-query';
-import {fetchNoteById} from '@/lib/api';
+import { useQuery } from '@tanstack/react-query';
+import { fetchNoteById } from '@/lib/api/clientApi';
 import css from './NoteDetails.module.css';
 import type { Note } from '@/types/note';
 
@@ -10,7 +10,11 @@ interface NoteDetailsClientProps {
 }
 
 export default function NoteDetailsClient({ noteId }: NoteDetailsClientProps) {
-  const { data: note, isLoading, isError } = useQuery<Note>({
+  const {
+    data: note,
+    isLoading,
+    isError,
+  } = useQuery<Note>({
     queryKey: ['note', noteId],
     queryFn: () => fetchNoteById(noteId),
   });
@@ -20,7 +24,7 @@ export default function NoteDetailsClient({ noteId }: NoteDetailsClientProps) {
   if (isError || !note) {
     return <div>Error loading note.</div>;
   }
-  
+
   const formattedDate = new Date(note.createdAt).toLocaleString('uk-UA', {
     year: 'numeric',
     month: 'long',
@@ -36,7 +40,7 @@ export default function NoteDetailsClient({ noteId }: NoteDetailsClientProps) {
           <h2>{note.title}</h2>
         </div>
         <p className={css.content}>{note.content}</p>
-        <p className={css.content}>{ note.tag}</p>
+        <p className={css.content}>{note.tag}</p>
         <p className={css.date}>{formattedDate}</p>
       </div>
     </div>

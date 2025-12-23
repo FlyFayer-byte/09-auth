@@ -1,6 +1,6 @@
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import './globals.css';
-import '@/app/notes/filter/[...slug]/NotesPage.module.css';
+import '@/app/(private routes)/notes/filter/[...slug]/NotesPage.module.css';
 import { Metadata } from 'next';
 
 import Header from '@/components/Header/Header';
