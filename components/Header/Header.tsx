@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import css from './Header.module.css';
 import AuthNavigation from '../AuthNavigation/AuthNavigation';
-import { useAuthStore } from "@/lib/store/authStore";
+import  useAuthStore  from "@/lib/store/authStore";
 import { useRouter } from 'next/navigation';
 
 const Header = () => {
@@ -35,6 +35,7 @@ const Header = () => {
               router.push('/sign-in');
             }}
           />
+
           <li className={css.navigationItem}>
             <Link className={css.navigationLink} href="/notes/filter/all">
               Notes

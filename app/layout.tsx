@@ -6,6 +6,7 @@ import { Metadata } from 'next';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import TanStackProvider from '@/components/TanStackProvider/TanStackProvider';
+import AuthProvider from '@/components/AuthProvider/AuthProvider';
 
 import { Roboto } from 'next/font/google';
 
@@ -24,7 +25,7 @@ export const metadata: Metadata = {
     title: 'NoteHub — Smart Notes Application',
     description:
       'Create, organize, and manage your notes easily with NoteHub — a modern note-taking app built with Next.js.',
-    url: 'https://08-zustand-beta-brown.vercel.app',
+    url: 'https://09-auth-xxxxx.vercel.app',
     images: [
       {
         url: 'https://ac.goit.global/fullstack/react/notehub-og-meta.jpg',
@@ -46,11 +47,13 @@ export default function RootLayout({ children, modal }: RootLayoutProps) {
     <html lang="en">
       <body className={`${roboto.variable}`}>
         <TanStackProvider>
-          <Header />
-          {children}
-          <Footer />
-          {modal}
-          <ReactQueryDevtools initialIsOpen={false}/>
+          <AuthProvider>
+            <Header />
+            {children}
+            <Footer />
+            {modal}
+            <ReactQueryDevtools initialIsOpen={false} />
+          </AuthProvider>
         </TanStackProvider>
       </body>
     </html>
