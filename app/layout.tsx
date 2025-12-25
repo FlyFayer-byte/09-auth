@@ -6,7 +6,6 @@ import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import TanStackProvider from '@/components/TanStackProvider/TanStackProvider';
 import AuthProvider from '@/components/AuthProvider/AuthProvider';
-
 import { Roboto } from 'next/font/google';
 
 const roboto = Roboto({
@@ -20,20 +19,6 @@ export const metadata: Metadata = {
   title: 'NoteHub — Smart Notes Application',
   description:
     'NoteHub is a modern note-taking application built with Next.js. Create, organize, filter, and manage your notes efficiently.',
-  openGraph: {
-    title: 'NoteHub — Smart Notes Application',
-    description:
-      'Create, organize, and manage your notes easily with NoteHub — a modern note-taking app built with Next.js.',
-    url: 'https://09-auth-xxxxx.vercel.app',
-    images: [
-      {
-        url: 'https://ac.goit.global/fullstack/react/notehub-og-meta.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'NoteHub application preview',
-      },
-    ],
-  },
 };
 
 interface RootLayoutProps {

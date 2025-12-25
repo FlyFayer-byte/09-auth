@@ -19,25 +19,15 @@ const AuthNavigation: React.FC<AuthNavigationProps> = ({
   const router = useRouter();
 
   const handleLogout = () => {
-    // Видаляємо токени
     document.cookie = 'accessToken=; Max-Age=0; path=/';
     document.cookie = 'refreshToken=; Max-Age=0; path=/';
-
-    // Викликаємо пропс onLogout
     onLogout();
-
-    // Редірект на сторінку входу
     router.push('/sign-in');
   };
-  
-  //isAuthenticated = false; // Тимчасове встановлення в false для тестування
-  
+
   if (isAuthenticated) {
-    console.log(`isAuthenticated: ${isAuthenticated} `);
-    
     return (
       <>
-        
         <li className={css.navigationItem}>
           <Link href="/notes/filter/all" className={css.navigationLink}>
             Notes

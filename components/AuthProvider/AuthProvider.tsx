@@ -1,33 +1,30 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, ReactNode } from 'react';
 import { checkSession } from '@/lib/api/clientApi';
 import useAuthStore from '@/lib/store/authStore';
 
-export default function AuthProvider({ children }: { children: React.ReactNode }) {
-  const { setUser, logout } = useAuthStore();
-  const [loading, setLoading] = useState(true);
+interface AuthProviderProps {
+  children: ReactNode;
+}
+
+export default function AuthProvider({ children }: AuthProviderProps) {
+  const { setUser, logout, setSessionChecked } = useAuthStore();
 
   useEffect(() => {
     const verifySession = async () => {
       try {
         const user = await checkSession();
-        if (user) {
-          setUser(user);
-        } else {
-          logout(); 
-        }
-      } catch (err) {
-        console.error('Session check failed:', err);
+        if (user) setUser(user);
+        else logout();
+      } catch {
         logout();
       } finally {
-        setLoading(false);
+        setSessionChecked(true);
       }
     };
-
     verifySession();
-  }, [setUser, logout]);
+  }, [setUser, logout, setSessionChecked]);
 
-  if (loading) return <p>Loading...</p>;
   return <>{children}</>;
 }
