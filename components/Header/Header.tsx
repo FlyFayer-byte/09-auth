@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import css from './Header.module.css';
 import AuthNavigation from '../AuthNavigation/AuthNavigation';
-import AuthInitializer from '../AuthInitializer/AuthInitializer';
 import useAuthStore from '@/lib/store/authStore';
 import { useRouter } from 'next/navigation';
 
@@ -13,7 +12,7 @@ const Header: React.FC = () => {
 
   return (
     <header className={css.header}>
-      <AuthInitializer />
+    
       <Link href="/" className={css.headerLink} aria-label="Home">
         NoteHub
       </Link>

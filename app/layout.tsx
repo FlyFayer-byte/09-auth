@@ -2,8 +2,6 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import './globals.css';
 import '@/app/(private routes)/notes/filter/[...slug]/NotesPage.module.css';
 import { Metadata } from 'next';
-
-import AuthInitializer from '@/components/AuthInitializer/AuthInitializer';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import TanStackProvider from '@/components/TanStackProvider/TanStackProvider';
@@ -49,7 +47,6 @@ export default function RootLayout({ children, modal }: RootLayoutProps) {
       <body className={`${roboto.variable}`}>
         <TanStackProvider>
           <AuthProvider>
-            <AuthInitializer />
             <Header />
             {children}
             <Footer />
