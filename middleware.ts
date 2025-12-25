@@ -1,26 +1,48 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { checkSessionServer } from '@/lib/api/serverApi';
 
-export function middleware(req: NextRequest) {
+export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
-  // Отримуємо cookies
-  const accessToken = req.cookies.get('accessToken');
+  const accessToken = req.cookies.get('accessToken')?.value;
+  const refreshToken = req.cookies.get('refreshToken')?.value;
 
-  // Приватні маршрути (profile, notes)
   const isPrivateRoute =
     pathname.startsWith('/profile') || pathname.startsWith('/notes');
 
-  // Публічні маршрути (sign-in, sign-up)
   const isAuthRoute =
     pathname.startsWith('/sign-in') || pathname.startsWith('/sign-up');
 
-  // Якщо користувач неавторизований і йде на приватну сторінку → редірект на sign-in
+  // Приватний маршрут + немає accessToken, але є refreshToken → пробуємо поновити сесію
+  if (isPrivateRoute && !accessToken && refreshToken) {
+    try {
+      const response = await checkSessionServer(
+        req.headers.get('cookie') ?? ''
+      );
+
+      // Якщо отримали користувача → оновлюємо куки
+      const nextResponse = NextResponse.next();
+      const setCookie = response.headers['set-cookie'];
+      if (setCookie) {
+        setCookie.forEach((cookie) =>
+          nextResponse.headers.append('set-cookie', cookie)
+        );
+      }
+
+      return nextResponse;
+    } catch {
+      // Помилка поновлення → редирект на сторінку логіну
+      return NextResponse.redirect(new URL('/sign-in', req.url));
+    }
+  }
+
+  // Приватний маршрут + немає accessToken → редирект на логін
   if (isPrivateRoute && !accessToken) {
     return NextResponse.redirect(new URL('/sign-in', req.url));
   }
 
-  // Якщо користувач авторизований і йде на сторінку логіну/реєстрації → редірект на profile
+  // Auth-маршрути + користувач авторизований → редирект на профіль
   if (isAuthRoute && accessToken) {
     return NextResponse.redirect(new URL('/profile', req.url));
   }
@@ -28,7 +50,6 @@ export function middleware(req: NextRequest) {
   return NextResponse.next();
 }
 
-// Налаштування, щоб middleware працював лише на потрібних маршрутах
 export const config = {
   matcher: ['/profile/:path*', '/notes/:path*', '/sign-in', '/sign-up'],
 };

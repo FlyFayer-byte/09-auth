@@ -1,11 +1,11 @@
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
-import { fetchNotes } from '@/lib/api/clientApi';
-// import { fetchNotes } from '@/lib/api';
+import { cookies } from 'next/headers';
+import { fetchNotesServer } from '@/lib/api/serverApi';
 import NotesClient from './Notes.client';
 import type { Metadata } from 'next';
 
 type PageProps = {
-  params: Promise<{ slug: string[] | undefined }>;
+  params: Promise<{ slug?: string[] }>;
 };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -33,32 +33,34 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-type Props = {
-  params: Promise<{ slug?: string[] }>;
-};
-
-export default async function Notes({ params }: Props) {
+export default async function Notes({ params }: PageProps) {
   const resolvedParams = await params;
 
-  const slug = resolvedParams?.slug?.[0] ?? 'all';
+  const slug = resolvedParams.slug?.[0] ?? 'all';
   const tag = slug === 'all' ? undefined : slug;
 
   const queryClient = new QueryClient();
 
+  const cookieStore = await cookies();
+  const cookieHeader = cookieStore.toString();
+
   await queryClient.prefetchQuery({
     queryKey: ['notes', 1, '', tag],
     queryFn: () =>
-      fetchNotes({
-        page: 1,
-        perPage: 12,
-        search: '',
-        tag,
-      }),
+      fetchNotesServer(
+        {
+          page: 1,
+          perPage: 12,
+          search: '',
+          tag,
+        },
+        cookieHeader
+      ),
   });
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <NotesClient tag={tag ?? 'all'} key={tag ?? 'all'} />
+      <NotesClient tag={tag ?? 'all'} />
     </HydrationBoundary>
   );
 }

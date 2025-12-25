@@ -3,12 +3,13 @@
 import css from './EditProfilePage.module.css';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { getMe, updateMe } from '@/lib/api/clientApi';
 import type { User } from '@/types/user';
 
 const EditProfileClient = () => {
   const router = useRouter();
+
   const [user, setUser] = useState<User | null>(null);
   const [username, setUsername] = useState('');
   const [loading, setLoading] = useState(false);
@@ -20,25 +21,30 @@ const EditProfileClient = () => {
         const data = await getMe();
         setUser(data);
         setUsername(data.username);
-      } catch (err) {
-        console.error('Failed to fetch user:', err);
+      } catch {
         setError('Не вдалося завантажити дані користувача');
       }
     };
+
     fetchUser();
   }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!username) return;
+
+    if (!username.trim()) {
+      setError('Username не може бути порожнім');
+      return;
+    }
+
     setLoading(true);
     setError(null);
 
     try {
       await updateMe({ username });
       router.push('/profile');
-    } catch (err) {
-      console.error('Failed to update user:', err);
+      router.refresh();
+    } catch {
       setError('Не вдалося оновити профіль');
     } finally {
       setLoading(false);
@@ -53,7 +59,7 @@ const EditProfileClient = () => {
         {user && (
           <Image
             src={user.avatar ?? '/default-avatar.png'}
-            alt="User Avatar"
+            alt="User avatar"
             width={120}
             height={120}
             className={css.avatar}
@@ -62,7 +68,7 @@ const EditProfileClient = () => {
 
         <form className={css.profileInfo} onSubmit={handleSubmit}>
           <div className={css.usernameWrapper}>
-            <label htmlFor="username">Username:</label>
+            <label htmlFor="username">Username</label>
             <input
               id="username"
               type="text"
@@ -72,12 +78,13 @@ const EditProfileClient = () => {
             />
           </div>
 
-          <p>Email: {user?.email}</p>
+          <p>Email: {user?.email ?? '—'}</p>
 
           <div className={css.actions}>
             <button type="submit" className={css.saveButton} disabled={loading}>
-              {loading ? 'Saving...' : 'Save'}
+              {loading ? 'Saving…' : 'Save'}
             </button>
+
             <button
               type="button"
               className={css.cancelButton}

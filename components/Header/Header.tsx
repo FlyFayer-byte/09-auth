@@ -27,6 +27,11 @@ const Header = () => {
               Home
             </Link>
           </li>
+          <li className={css.navigationItem}>
+            <Link className={css.navigationLink} href="/notes/filter/all">
+              Notes
+            </Link>
+          </li>
           <AuthNavigation
             isAuthenticated={isAuthenticated}
             userEmail={user?.email}
@@ -35,12 +40,6 @@ const Header = () => {
               router.push('/sign-in');
             }}
           />
-
-          <li className={css.navigationItem}>
-            <Link className={css.navigationLink} href="/notes/filter/all">
-              Notes
-            </Link>
-          </li>
         </ul>
       </nav>
     </header>
