@@ -1,19 +1,10 @@
-// components/Header/Header.tsx
 'use client';
+
 import Link from 'next/link';
 import css from './Header.module.css';
 import AuthNavigation from '../AuthNavigation/AuthNavigation';
-import  useAuthStore  from "@/lib/store/authStore";
-import { useRouter } from 'next/navigation';
 
 const Header = () => {
-  // const categories = await getEnabledCategories();
-  const router = useRouter();
-  const isAuthenticated = useAuthStore.getState().isAuthenticated;
-  const user = useAuthStore.getState().user;
-  const logout = useAuthStore.getState().logout;
-
-  
   return (
     <header className={css.header}>
       <Link className={css.headerLink} href="/" aria-label="Home">
@@ -32,14 +23,7 @@ const Header = () => {
               Notes
             </Link>
           </li>
-          <AuthNavigation
-            isAuthenticated={isAuthenticated}
-            userEmail={user?.email}
-            onLogout={() => {
-              logout();
-              router.push('/sign-in');
-            }}
-          />
+          <AuthNavigation />
         </ul>
       </nav>
     </header>

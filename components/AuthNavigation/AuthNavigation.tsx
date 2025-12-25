@@ -5,53 +5,33 @@ import { useRouter } from 'next/navigation';
 import css from './AuthNavigation.module.css';
 import useAuthStore from '@/lib/store/authStore';
 
-type AuthNavigationProps = {
-  isAuthenticated: boolean;
-  userEmail?: string;
-  onLogout: () => void;
-};
-
-
-const AuthNavigation: React.FC<AuthNavigationProps> = () => {
+const AuthNavigation: React.FC = () => {
   const router = useRouter();
   const { isAuthenticated, user, logout } = useAuthStore();
 
-  const handleLogout = async () => {
-    try {
-      logout();
-      document.cookie = 'accessToken=; Max-Age=0; path=/';
-      document.cookie = 'refreshToken=; Max-Age=0; path=/';
-      router.push('/sign-in');
-    } catch (err) {
-      console.error('Logout failed:', err);
-    }
+  const handleLogout = () => {
+    logout();
+    document.cookie = 'accessToken=; Max-Age=0; path=/';
+    document.cookie = 'refreshToken=; Max-Age=0; path=/';
+    router.push('/sign-in');
   };
 
   return (
     <ul className={css.navigationList}>
       {isAuthenticated ? (
+        <li className={css.navigationItem}>
+          <Link href="/profile" prefetch={false} className={css.navigationLink}>
+            Profile: {user?.email}
+          </Link>
+          <button onClick={handleLogout} className={css.logoutButton}>
+            Logout
+          </button>
+        </li>
+      ) : (
         <>
           <li className={css.navigationItem}>
-            <Link href="/profile" prefetch={false} className={css.navigationLink}>
-              Profile: {user?.email}
-            </Link>
-            <button onClick={handleLogout} className={css.logoutButton}>
-              Logout
-            </button>
-            {/* <p className={css.userEmail}>{user?.email}</p> */}
-          </li>
-          {/* <li className={css.navigationItem}> */}
-          {/* <p className={css.userEmail}>{user?.email}</p> */}
-          {/* <button onClick={handleLogout} className={css.logoutButton}> */}
-          {/* Logout */}
-          {/* </button> */}
-          {/* </li> */}
-        </>
-      ) : (
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <li className={css.navigationItem}>
             <Link href="/sign-in" prefetch={false} className={css.navigationLink}>
-              Login
+              Sign in
             </Link>
           </li>
           <li className={css.navigationItem}>
@@ -59,7 +39,7 @@ const AuthNavigation: React.FC<AuthNavigationProps> = () => {
               Sign up
             </Link>
           </li>
-        </div>
+        </>
       )}
     </ul>
   );
