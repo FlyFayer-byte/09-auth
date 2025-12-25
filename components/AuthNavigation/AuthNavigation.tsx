@@ -29,10 +29,15 @@ const AuthNavigation: React.FC<AuthNavigationProps> = ({
     // Редірект на сторінку входу
     router.push('/sign-in');
   };
-
+  
+  //isAuthenticated = false; // Тимчасове встановлення в false для тестування
+  
   if (isAuthenticated) {
+    console.log(`isAuthenticated: ${isAuthenticated} `);
+    
     return (
       <>
+        
         <li className={css.navigationItem}>
           <Link href="/notes/filter/all" className={css.navigationLink}>
             Notes
