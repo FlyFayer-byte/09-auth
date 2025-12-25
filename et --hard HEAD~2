@@ -1,0 +1,18 @@
+[33meaf6f0e[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m 	modified:   components/AuthProvider/AuthProvider.tsx 	modified:   components/Header/Header.tsx 	modified:   lib/store/authStore.ts
+[33mc363075[m 	modified:   app/layout.tsx 	modified:   components/AuthNavigation/AuthNavigation.tsx 	modified:   components/AuthProvider/AuthProvider.tsx 	modified:   components/Header/Header.tsx 	modified:   lib/store/authStore.ts
+[33m9bc5b74[m 	modified:   components/AuthNavigation/AuthNavigation.tsx
+[33m22ea749[m 	modified:   app/layout.tsx 	deleted:    components/AuthInitializer/AuthInitializer.tsx 	modified:   components/Header/Header.tsx
+[33m98b7937[m 	modified:   components/AuthNavigation/AuthNavigation.tsx 	modified:   components/Header/Header.tsx 	modified:   lib/store/authStore.ts
+[33m3699278[m 	modified:   lib/store/authStore.ts
+[33mb7f5ead[m 	modified:   components/AuthNavigation/AuthNavigation.tsx
+[33m2688a4a[m 	modified:   components/AuthInitializer/AuthInitializer.tsx 	modified:   lib/store/authStore.ts
+[33m84d15e3[m 	modified:   app/layout.tsx 	new file:   components/AuthInitializer/AuthInitializer.tsx 	modified:   components/AuthNavigation/AuthNavigation.tsx 	modified:   components/Header/Header.tsx 	modified:   lib/store/authStore.ts
+[33mbb4124d[m 	modified:   components/AuthNavigation/AuthNavigation.tsx
+[33m662cdb3[m 	modified:   components/AuthNavigation/AuthNavigation.tsx 	modified:   components/Header/Header.tsx
+[33mf067a11[m 	fix: use serverApi in server components and complete edit profile form
+[33mb13eb06[m 	deleted:    lib/api.ts
+[33m37774b2[m 	renamed:    proxy..ts -> middleware.ts
+[33m981fc60[m 	modified:   app/(auth routes)/sign-in/page.tsx 	modified:   app/(auth routes)/sign-up/page.tsx
+[33md4b6441[m 	modified:   README.md 	modified:   lib/api/clientApi.ts
+[33md8e7a3b[m 	modified:   app/layout.tsx 	modified:   app/notes/filter/[...slug]/Notes.client.tsx 	modified:   app/notes/filter/[...slug]/page.tsx 	modified:   app/notes/filter/layout.tsx 	modified:   app/page.tsx 	modified:   components/Footer/Footer.tsx 	modified:   components/Header/Header.tsx 	modified:   components/NoteForm/NoteForm.tsx 	modified:   components/Pagination/Pagination.tsx 	modified:   types/note.ts
+[33m24102dd[m Initial commit
