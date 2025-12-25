@@ -1,28 +1,29 @@
+// components/Header/Header.tsx
 'use client';
-
 import Link from 'next/link';
 import css from './Header.module.css';
 import AuthNavigation from '../AuthNavigation/AuthNavigation';
-import useAuthStore from '@/lib/store/authStore';
+import  useAuthStore  from "@/lib/store/authStore";
 import { useRouter } from 'next/navigation';
-import React from 'react';
 
-const Header: React.FC = () => {
+const Header = () => {
+  // const categories = await getEnabledCategories();
   const router = useRouter();
-  const { isAuthenticated, sessionChecked, logout, user } = useAuthStore();
+  const isAuthenticated = useAuthStore.getState().isAuthenticated;
+  const user = useAuthStore.getState().user;
+  const logout = useAuthStore.getState().logout;
 
-  // Блокуємо рендер поки сесія не перевірена
-  if (!sessionChecked) return null;
-
+  
   return (
     <header className={css.header}>
-      <Link href="/" className={css.headerLink} aria-label="Home">
+      <Link className={css.headerLink} href="/" aria-label="Home">
         NoteHub
       </Link>
+
       <nav aria-label="Main Navigation">
         <ul className={css.navigation}>
           <li className={css.navigationItem}>
-            <Link href="/" className={css.navigationLink}>
+            <Link className={css.navigationLink} href="/">
               Home
             </Link>
           </li>
@@ -34,6 +35,12 @@ const Header: React.FC = () => {
               router.push('/sign-in');
             }}
           />
+
+          <li className={css.navigationItem}>
+            <Link className={css.navigationLink} href="/notes/filter/all">
+              Notes
+            </Link>
+          </li>
         </ul>
       </nav>
     </header>
