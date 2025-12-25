@@ -20,31 +20,31 @@ const AuthNavigation = () => {
     // Редірект на сторінку входу
     router.push('/sign-in');
   };
-
+  if (isAuthenticated) {
+    return (
+      <li className={css.navigationItem}>
+        <Link href="/profile" className={css.navigationLink}>
+          Profile: {user?.email}
+        </Link>
+        <button onClick={handleLogout} className={css.logoutButton}>
+          Logout
+        </button>
+      </li>
+    );
+  }
   return (
     <ul className={css.navigationList}>
-      {isAuthenticated ? (
+      <>
         <li className={css.navigationItem}>
-          <Link href="/profile" className={css.navigationLink}>
-            Profile: {user?.email}
+          <Link href="/sign-in" className={css.navigationLink}>
+            Sign In
           </Link>
-          <button onClick={handleLogout} className={css.logoutButton}>
-            Logout
-          </button>
-        </li>
-      ) : (
-        <>
-          <li className={css.navigationItem}>
-            <Link href="/sign-in" className={css.navigationLink}>
-              Sign In
-            </Link>
 
-            <Link href="/sign-up" className={css.navigationLink}>
-              Sign Up
-            </Link>
-          </li>
-        </>
-      )}
+          <Link href="/sign-up" className={css.navigationLink}>
+            Sign Up
+          </Link>
+        </li>
+      </>
     </ul>
   );
 };
