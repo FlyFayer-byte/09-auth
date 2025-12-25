@@ -18,6 +18,7 @@ const AuthInitializer = () => {
           reset();
         }
       } catch (err) {
+          console.error('Error during auth initialization:', err);
         reset();
       }
     };

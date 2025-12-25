@@ -9,7 +9,7 @@ type AuthStore = {
   reset: () => void;
 };
 
-const useAuthStore = create<AuthStore>((set) => ({
+const useAuthStore = create<AuthStore>()((set) => ({
   user: null,
   isAuthenticated: false,
   setUser: (user) => set({ user, isAuthenticated: true }),
