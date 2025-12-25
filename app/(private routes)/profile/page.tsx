@@ -12,10 +12,11 @@ export const metadata: Metadata = {
 };
 
 export default async function ProfilePage() {
-  const cookieStore = await cookies(); // <-- await
+  const cookieStore = await cookies(); //Для моєї версії Next.js це правльно
+
   const cookieHeader = cookieStore
     .getAll()
-    .map(c => `${c.name}=${c.value}`)
+    .map((c: { name: string; value: string }) => `${c.name}=${c.value}`)
     .join('; ');
 
   const user: User = await getMeServer(cookieHeader);
@@ -29,6 +30,7 @@ export default async function ProfilePage() {
             Edit Profile
           </Link>
         </div>
+
         <div className={css.avatarWrapper}>
           <Image
             src={user.avatar ?? '/default-avatar.png'}
@@ -38,6 +40,7 @@ export default async function ProfilePage() {
             className={css.avatar}
           />
         </div>
+
         <div className={css.profileInfo}>
           <p>Username: {user.username}</p>
           <p>Email: {user.email}</p>

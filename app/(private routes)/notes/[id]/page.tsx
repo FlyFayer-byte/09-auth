@@ -6,15 +6,17 @@ import { fetchNoteByIdServer } from '@/lib/api/serverApi';
 import NoteDetailsClient from './NoteDetails.client';
 
 interface PageProps {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   try {
+    const { id } = await params;
+
     const cookieStore = await cookies();
     const cookieHeader = cookieStore.toString();
 
-    const note = await fetchNoteByIdServer(params.id, cookieHeader);
+    const note = await fetchNoteByIdServer(id, cookieHeader);
 
     const description =
       note.content.length > 120 ? note.content.slice(0, 120) + '...' : note.content;
@@ -25,7 +27,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       openGraph: {
         title: `${note.title} | NoteHub`,
         description,
-        url: `https://08-zustand-beta-brown.vercel.app/notes/${params.id}`,
+        url: `https://08-zustand-beta-brown.vercel.app/notes/${id}`,
         images: [
           {
             url: 'https://ac.goit.global/fullstack/react/notehub-og-meta.jpg',
@@ -45,19 +47,21 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function NoteDetailsPage({ params }: PageProps) {
+  const { id } = await params;
+
   const queryClient = new QueryClient();
 
   const cookieStore = await cookies();
   const cookieHeader = cookieStore.toString();
 
   await queryClient.prefetchQuery({
-    queryKey: ['note', params.id],
-    queryFn: () => fetchNoteByIdServer(params.id, cookieHeader),
+    queryKey: ['note', id],
+    queryFn: () => fetchNoteByIdServer(id, cookieHeader),
   });
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <NoteDetailsClient noteId={params.id} />
+      <NoteDetailsClient noteId={id} />
     </HydrationBoundary>
   );
 }

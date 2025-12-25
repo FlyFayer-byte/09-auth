@@ -35,12 +35,6 @@ const Header = () => {
               router.push('/sign-in');
             }}
           />
-
-          <li className={css.navigationItem}>
-            <Link className={css.navigationLink} href="/notes/filter/all">
-              Notes
-            </Link>
-          </li>
         </ul>
       </nav>
     </header>
