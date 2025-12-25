@@ -4,8 +4,13 @@ import Link from 'next/link';
 import css from './Header.module.css';
 import AuthNavigation from '../AuthNavigation/AuthNavigation';
 import AuthInitializer from '../AuthInitializer/AuthInitializer';
+import useAuthStore from '@/lib/store/authStore';
+import { useRouter } from 'next/navigation';
 
-const Header = () => {
+const Header: React.FC = () => {
+  const router = useRouter();
+  const { isAuthenticated, logout, user } = useAuthStore();
+
   return (
     <header className={css.header}>
       <AuthInitializer />
@@ -19,12 +24,14 @@ const Header = () => {
               Home
             </Link>
           </li>
-          <li className={css.navigationItem}>
-            <Link href="/notes/filter/all" className={css.navigationLink}>
-              Notes
-            </Link>
-          </li>
-          <AuthNavigation />
+          <AuthNavigation
+            isAuthenticated={isAuthenticated}
+            userEmail={user?.email}
+            onLogout={() => {
+              logout();
+              router.push('/sign-in');
+            }}
+          />
         </ul>
       </nav>
     </header>

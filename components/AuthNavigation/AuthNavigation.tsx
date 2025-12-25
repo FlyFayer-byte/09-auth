@@ -3,49 +3,68 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import css from './AuthNavigation.module.css';
-import useAuthStore from '@/lib/store/authStore';
+import React from 'react';
 
-const AuthNavigation = () => {
+interface AuthNavigationProps {
+  isAuthenticated: boolean;
+  userEmail?: string;
+  onLogout: () => void;
+}
+
+const AuthNavigation: React.FC<AuthNavigationProps> = ({
+  isAuthenticated,
+  userEmail,
+  onLogout,
+}) => {
   const router = useRouter();
-  const { isAuthenticated, user, reset } = useAuthStore();
 
   const handleLogout = () => {
     // Видаляємо токени
     document.cookie = 'accessToken=; Max-Age=0; path=/';
     document.cookie = 'refreshToken=; Max-Age=0; path=/';
 
-    // Скидаємо стан користувача
-    reset();
+    // Викликаємо пропс onLogout
+    onLogout();
 
     // Редірект на сторінку входу
     router.push('/sign-in');
   };
+
   if (isAuthenticated) {
     return (
-      <li className={css.navigationItem}>
-        <Link href="/profile" className={css.navigationLink}>
-          Profile: {user?.email}
-        </Link>
-        <button onClick={handleLogout} className={css.logoutButton}>
-          Logout
-        </button>
-      </li>
-    );
-  }
-  return (
-    <ul className={css.navigationList}>
       <>
         <li className={css.navigationItem}>
-          <Link href="/sign-in" className={css.navigationLink}>
-            Sign In
-          </Link>
-
-          <Link href="/sign-up" className={css.navigationLink}>
-            Sign Up
+          <Link href="/notes/filter/all" className={css.navigationLink}>
+            Notes
           </Link>
         </li>
+        <li className={css.navigationItem}>
+          <Link href="/profile" className={css.navigationLink}>
+            Profile: {userEmail}
+          </Link>
+        </li>
+        <li className={css.navigationItem}>
+          <button onClick={handleLogout} className={css.logoutButton}>
+            Logout
+          </button>
+        </li>
       </>
-    </ul>
+    );
+  }
+
+  return (
+    <>
+      <li className={css.navigationItem}>
+        <Link href="/sign-in" className={css.navigationLink}>
+          Sign In
+        </Link>
+      </li>
+      <li className={css.navigationItem}>
+        <Link href="/sign-up" className={css.navigationLink}>
+          Sign Up
+        </Link>
+      </li>
+    </>
   );
 };
 

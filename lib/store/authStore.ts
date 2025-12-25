@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import type { User } from '@/types/user';
 
-type AuthStore = {
+export type AuthStore = {
   user: User | null;
   isAuthenticated: boolean;
   setUser: (user: User) => void;
