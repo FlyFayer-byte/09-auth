@@ -7,17 +7,18 @@ import useAuthStore from '@/lib/store/authStore';
 
 const AuthNavigation = () => {
   const router = useRouter();
-  const { isAuthenticated, user, logout } = useAuthStore();
+  const { isAuthenticated, user, reset } = useAuthStore();
 
-  const handleLogout = async () => {
-    try {
-      logout();
-      document.cookie = 'accessToken=; Max-Age=0; path=/';
-      document.cookie = 'refreshToken=; Max-Age=0; path=/';
-      router.push('/sign-in');
-    } catch (err) {
-      console.error('Logout failed:', err);
-    }
+  const handleLogout = () => {
+    // Видаляємо токени
+    document.cookie = 'accessToken=; Max-Age=0; path=/';
+    document.cookie = 'refreshToken=; Max-Age=0; path=/';
+
+    // Скидаємо стан користувача
+    reset();
+
+    // Редірект на сторінку входу
+    router.push('/sign-in');
   };
 
   return (
@@ -35,12 +36,11 @@ const AuthNavigation = () => {
         <>
           <li className={css.navigationItem}>
             <Link href="/sign-in" className={css.navigationLink}>
-              Sign in
+              Sign In
             </Link>
-          </li>
-          <li className={css.navigationItem}>
+
             <Link href="/sign-up" className={css.navigationLink}>
-              Sign up
+              Sign Up
             </Link>
           </li>
         </>
