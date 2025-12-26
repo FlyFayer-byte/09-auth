@@ -8,7 +8,7 @@ import React from 'react';
 interface AuthNavigationProps {
   isAuthenticated: boolean;
   userEmail?: string;
-  onLogout: () => void;
+  onLogout: () => Promise<void>;
 }
 
 const AuthNavigation: React.FC<AuthNavigationProps> = ({
@@ -18,11 +18,13 @@ const AuthNavigation: React.FC<AuthNavigationProps> = ({
 }) => {
   const router = useRouter();
 
-  const handleLogout = () => {
-    document.cookie = 'accessToken=; Max-Age=0; path=/';
-    document.cookie = 'refreshToken=; Max-Age=0; path=/';
-    onLogout();
-    router.push('/sign-in');
+  const handleLogout = async () => {
+    try {
+      await onLogout();
+      router.push('/sign-in');
+    } catch (error) {
+      console.error('Logout failed', error);
+    }
   };
 
   if (isAuthenticated) {
